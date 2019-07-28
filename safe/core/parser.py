@@ -14,33 +14,37 @@ _SUPPORTED_COMMANDS = [
 _ERROR_KEY = "safe_error"
 
 
-class _PasswordPromptAction(argparse.Action):
-    """
-    This Action forces the user to provide a password safely
-    after they enter all parameters.
-    """
+def _password_action(prompt: str = "Password: ") -> Callable[..., argparse.Action]:
 
-    def __init__(
-        self, option_strings: str, dest: str, nargs: int = 0, **kwargs
-    ) -> None:
-        if nargs != 0:
-            raise RuntimeError(
-                "Anything other than 0 is not allowed for "
-                "PasswordPromptAction"
+    class PasswordPromptAction(argparse.Action):
+        """
+        This Action forces the user to provide a password safely
+        after they enter all parameters.
+        """
+
+        def __init__(
+            self, option_strings: str, dest: str, nargs: int = 0, **kwargs
+        ) -> None:
+            if nargs != 0:
+                raise RuntimeError(
+                    "Anything other than 0 is not allowed for "
+                    "PasswordPromptAction"
+                )
+            super(PasswordPromptAction, self).__init__(
+                option_strings, dest, nargs, **kwargs
             )
-        super(_PasswordPromptAction, self).__init__(
-            option_strings, dest, nargs, **kwargs
-        )
 
-    def __call__(  # type: ignore
-        self,
-        parser: argparse.ArgumentParser,
-        args: argparse.Namespace,
-        values: List[str],
-        option_string: str = None,
-    ) -> None:
-        password = getpass.getpass()
-        setattr(args, self.dest, password)
+        def __call__(  # type: ignore
+            self,
+            parser: argparse.ArgumentParser,
+            args: argparse.Namespace,
+            values: List[str],
+            option_string: str = None,
+        ) -> None:
+            password = getpass.getpass(prompt=prompt)
+            setattr(args, self.dest, password)
+
+    return PasswordPromptAction
 
 
 class _CommandValidatorAction(argparse.Action):
@@ -118,7 +122,7 @@ def _add_password_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "password",
         nargs=0,
-        action=_PasswordPromptAction,
+        action=_password_action(),
         type=str,
         help=argparse.SUPPRESS,
     )
@@ -181,7 +185,7 @@ def _get_parser() -> argparse.ArgumentParser:
         "-sp",
         "--set-password",
         dest="new_password",
-        action=_PasswordPromptAction,
+        action=_password_action("New Password: "),
         type=str,
         required=False,
         help=(
