@@ -2,9 +2,8 @@ import sys
 
 from safe.common import exit_codes
 from safe.common.types import RootCommand
-from safe.core import parser
+from safe.core import cmd_config, cmd_convert, cmd_shell, parser, protection
 from safe.core.converter import Converter
-from safe.core import protection
 
 
 def run() -> None:
@@ -24,28 +23,14 @@ def run() -> None:
         print("CONVERT")
         filepath = namespace.file
         should_decrypt = namespace.decrypt
-
-        # todo: write a function for this. should think about how
-        #  this would fit with vim and other commands
-        if should_decrypt:
-            # output = read_safe_file_and_decrypt(filepath, converter)
-            pass
-        else:
-            # output = read_file_and_encrypt(filepath, converter)
-            pass
-        # print(output)
+        cmd_convert.run(converter, filepath, should_decrypt)
         exit(exit_codes.SUCCESS)
 
     # handle config
     if namespace.safe_command == RootCommand.CONFIG:
         print("CONFIG")
-        new_password = namespace.new_password
-        # todo: write a function for this. this function should
-        #  first read all the encrypted files and decrypt them,
-        #  then change the password, then re-encrypt the files.
-        #  in addition, if it's stopped somewhere in the middle
-        #  of doing all of that, nothing should be changed
-        #  must also work for salt or both at the same time
+        data = cmd_config.ConfigData(new_password=namespace.new_password)
+        cmd_config.run(converter, data)
         exit(exit_codes.SUCCESS)
 
     # handle shell
@@ -53,5 +38,5 @@ def run() -> None:
         print("SHELL")
         filepath = namespace.safe_file
         cmd, cmd_args = namespace.command[0], namespace.command[:1]
-        # todo: write this method
+        cmd_shell.run(converter, filepath, cmd, *cmd_args)
         exit(exit_codes.SUCCESS)
