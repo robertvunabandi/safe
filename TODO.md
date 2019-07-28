@@ -1,0 +1,21 @@
+# TODO
+`
+- Create a `logger` and a `printer` to print errors. Printer prints error to user. Logger just logs stuffs. We could just use Python's loggers from `logging` module. We do need a printer to print stuffs in colors and shit. 
+- Use `sqlite` to store data about files that have been stored as `.safe`. We need the following fields:
+  - Absolute file path
+  - Original file path
+  - Date first converted
+  - Date updated
+  - ???
+- What about keeping a log of actions taken by the user? With that table, we could then have tables for all of these other things.
+- Create a method to scan everything for safety to make sure that:
+  - All files that were stored haven't been tampered with
+  - If files moved (i.e., missing) notify user and ask whether we should forget about it
+- We can use [appdirs](https://pypi.org/project/appdirs/) library to directly store data into application location for the platform, which is nice.
+- We can protect python source files using [Cython](https://medium.com/@xpl/protecting-python-sources-using-cython-dcd940bb188e).
+- Potentially protect the SQLite db as well with [sqlcipher](https://github.com/sqlcipher/sqlcipher)?
+- [aescrypt](https://www.aescrypt.com/linux_aes_crypt.html) does this except it uses a password that varies from file to file. 
+- Should look into symmetric cipher:
+  - AES-256-OFB w/ PBKDF2 password derivation (SHA256, 4096 rounds) and HMAC (SHA256)
+    - Even [trousseau](https://github.com/oleiade/trousseau) uses that... Hmm...
+- Look into [interlock](https://github.com/inversepath/interlock) for code storage that logs information about what was used to encrypt it
