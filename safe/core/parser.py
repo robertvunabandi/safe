@@ -1,6 +1,6 @@
 import argparse
 import getpass
-from typing import Callable, List
+from typing import Callable, List, Type
 
 from safe.common.types import RootCommand
 
@@ -14,7 +14,7 @@ _SUPPORTED_COMMANDS = [
 _ERROR_KEY = "safe_error"
 
 
-def _password_action(prompt: str = "Password: ") -> Callable[..., argparse.Action]:
+def _password_action(prompt: str = "Password: ") -> Type[argparse.Action]:
 
     class PasswordPromptAction(argparse.Action):
         """
