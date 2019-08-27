@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 
 from safe.common import exit_codes
 from safe.common.types import RootCommand
@@ -23,7 +24,7 @@ def run() -> None:
         print("CONVERT")
         filepath = namespace.file
         should_decrypt = namespace.decrypt
-        cmd_convert.run(converter, filepath, should_decrypt)
+        cmd_convert.run(converter, Path(filepath), should_decrypt)
         exit(exit_codes.SUCCESS)
 
     # handle config
