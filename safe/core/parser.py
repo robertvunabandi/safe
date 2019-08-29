@@ -183,6 +183,19 @@ def _get_parser() -> argparse.ArgumentParser:
             "regardless of whether that file already exists."
         ),
     )
+    convert_cmd.add_argument(
+        "-n",
+        "--name",
+        dest="name",
+        default=None,
+        help=(
+            "when given, the converted result will be written to this "
+            "starting at the root of the directory where the input file "
+            "is from. If it's an encryption, a `.safe` extension will be "
+            " added in case the name given doesn't have it."
+        ),
+        required=False,
+    )
     _add_password_argument(convert_cmd)
 
     # config: configurations, like password and salt

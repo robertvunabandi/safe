@@ -25,7 +25,10 @@ def run() -> None:
         filepath = namespace.file
         should_decrypt = namespace.decrypt
         should_overwrite = namespace.overwrite
-        exit_code = cmd_convert.run(converter, Path(filepath), should_decrypt, should_overwrite)
+        name = namespace.name
+        exit_code = cmd_convert.run(
+            converter, Path(filepath), should_decrypt, should_overwrite, name
+        )
         sys.exit(exit_code)
 
     # handle config
