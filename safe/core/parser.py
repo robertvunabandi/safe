@@ -167,10 +167,20 @@ def _get_parser() -> argparse.ArgumentParser:
         "--decrypt",
         dest="decrypt",
         action="store_true",
-        default=False,
         help=(
             "whether the file given is a `.safe` file that "
             "is meant to be decrypted."
+        ),
+    )
+    convert_cmd.add_argument(
+        "-o",
+        "--overwrite",
+        dest="overwrite",
+        action="store_true",
+        help=(
+            "when given, the converted result (either encrypted or "
+            "decrypted) will be written into the respective file "
+            "regardless of whether that file already exists."
         ),
     )
     _add_password_argument(convert_cmd)
