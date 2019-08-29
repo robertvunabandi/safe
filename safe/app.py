@@ -22,12 +22,12 @@ def run() -> None:
     # handle convert
     if namespace.safe_command == RootCommand.CONVERT:
         print("CONVERT")
-        filepath = namespace.file
-        should_decrypt = namespace.decrypt
+        filepath = Path(namespace.file)
+        should_decrypt = filepath.suffix == ".safe"
         should_overwrite = namespace.overwrite
         name = namespace.name
         exit_code = cmd_convert.run(
-            converter, Path(filepath), should_decrypt, should_overwrite, name
+            converter, filepath, should_decrypt, should_overwrite, name
         )
         sys.exit(exit_code)
 

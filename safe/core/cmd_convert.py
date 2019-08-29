@@ -15,6 +15,9 @@ def run(
     if not filepath.exists():
         # todo - somehow print error messages to tell that the file doesn't exist
         return exit_codes.FILE_DOES_NOT_EXIST
+    if filepath.is_dir():
+        # todo - print correct error
+        return exit_codes.PATH_IS_DIRECTORY
     if decrypt:
         return _run_decryption(converter, filepath, overwrite, name)
     return _run_encryption(converter, filepath, overwrite, name)

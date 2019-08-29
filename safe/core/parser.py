@@ -158,18 +158,11 @@ def _get_parser() -> argparse.ArgumentParser:
         dest="file",
         metavar="FILE",
         help=(
-            "file to encrypt/decrypt. This is a file to "
-            "encrypt by default."
-        ),
-    )
-    convert_cmd.add_argument(
-        "-d",
-        "--decrypt",
-        dest="decrypt",
-        action="store_true",
-        help=(
-            "whether the file given is a `.safe` file that "
-            "is meant to be decrypted."
+            "file to encrypt/decrypt. If the file has the extension "
+            "`.safe`, then this will run a decryption operation and will "
+            "out a file named with this file name without the extension. "
+            "Otherwise it'll run an encryption operation. The output file "
+            "will have this file's name with the extension `.safe`."
         ),
     )
     convert_cmd.add_argument(
