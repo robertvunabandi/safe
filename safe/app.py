@@ -15,7 +15,7 @@ def run() -> None:
     password = namespace.password
     if not protection.check_password(password):
         print("\nThe password you entered is invalid.\n")
-        exit(exit_codes.INVALID_PASSWORD)
+        sys.exit(exit_codes.INVALID_PASSWORD)
 
     converter = Converter(password)
 
@@ -24,20 +24,20 @@ def run() -> None:
         print("CONVERT")
         filepath = namespace.file
         should_decrypt = namespace.decrypt
-        cmd_convert.run(converter, Path(filepath), should_decrypt)
-        exit(exit_codes.SUCCESS)
+        exit_code = cmd_convert.run(converter, Path(filepath), should_decrypt)
+        sys.exit(exit_code)
 
     # handle config
     if namespace.safe_command == RootCommand.CONFIG:
         print("CONFIG")
         data = cmd_config.ConfigData(new_password=namespace.new_password)
-        cmd_config.run(converter, data)
-        exit(exit_codes.SUCCESS)
+        exit_code = cmd_config.run(converter, data)
+        sys.exit(exit_code)
 
     # handle shell
     if namespace.safe_command == RootCommand.SHELL:
         print("SHELL")
         filepath = namespace.safe_file
         cmd, cmd_args = namespace.command[0], namespace.command[:1]
-        cmd_shell.run(converter, filepath, cmd, *cmd_args)
-        exit(exit_codes.SUCCESS)
+        exit_code = cmd_shell.run(converter, filepath, cmd, *cmd_args)
+        sys.exit(exit_code)

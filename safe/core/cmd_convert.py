@@ -10,4 +10,6 @@ def run(converter: Converter, filepath: pathlib.Path, decrypt: bool) -> int:
         # todo - better handle this with error messages,
         #  like a RunResult thing
         return exit_codes.FILE_DOES_NOT_EXIST
+    # if decrypt, check that content is valid
+    # read its content
     raise NotImplementedError

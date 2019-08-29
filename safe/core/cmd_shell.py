@@ -1,7 +1,7 @@
 from safe.core.converter import Converter
 
 
-def run(converter: Converter, filepath: str, command: str, *args: str) -> None:
+def run(converter: Converter, filepath: str, command: str, *args: str) -> int:
     # todo: write a function for this. this function should
     #  first read all the encrypted files and decrypt them,
     #  then change the password, then re-encrypt the files.

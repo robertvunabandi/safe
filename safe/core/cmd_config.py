@@ -7,7 +7,7 @@ class ConfigData(NamedTuple):
     new_password: Optional[str]
 
 
-def run(converter: Converter, data: ConfigData) -> None:
+def run(converter: Converter, data: ConfigData) -> int:
     # todo: write a function for this. this function should
     #  first read all the encrypted files and decrypt them,
     #  then change the password, then re-encrypt the files.
@@ -16,3 +16,4 @@ def run(converter: Converter, data: ConfigData) -> None:
     #  this operation should be atomic).
     if data.new_password:
         raise NotImplementedError
+    raise NotImplementedError
